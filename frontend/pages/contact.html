@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -15,6 +16,7 @@
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/animations.css">
 </head>
+
 <body>
 
   <!-- HEADER -->
@@ -23,14 +25,20 @@
       <div class="logo" onclick="window.location.href='../index.html'">FoldNest</div>
       <input type="text" id="searchBar" placeholder="Search furniture..." onkeyup="searchProducts()">
       <ul class="nav-links">
-        <li><button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" aria-label="Toggle theme"></button></li>
-        <li><a href="../index.html">Home</a></li>
+        <li><button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode"
+            aria-label="Toggle theme"></button></li>
+        <li><a href="../index.html">Home </a></li>
         <li><a href="products.html">Products</a></li>
         <li><a href="about.html">About</a></li>
         <li><a href="contact.html">Contact</a></li>
         <li><a href="order_history.html">Orders</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a></li>
+        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg
+              xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+              stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg> Profile</a></li>
       </ul>
     </nav>
   </header>
@@ -57,9 +65,12 @@
       </div>
       <div class="input-group">
         <label>Message</label>
-        <textarea id="contact-message" placeholder="How can we help you?" rows="4" style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit;" required></textarea>
+        <textarea id="contact-message" placeholder="How can we help you?" rows="4"
+          style="width: 100%; padding: 10px; border-radius: 4px; border: 1px solid #ccc; font-family: inherit;"
+          required></textarea>
       </div>
-      <button class="btn" id="contact-submit-btn" style="width:100%" onclick="submitContactQuery()">Send Message</button>
+      <button class="btn" id="contact-submit-btn" style="width:100%" onclick="submitContactQuery()">Send
+        Message</button>
     </div>
   </section>
 
@@ -94,5 +105,5 @@
   <script src="../js/contact_submit.js"></script>
 
 </body>
-</html>
 
+</html>
