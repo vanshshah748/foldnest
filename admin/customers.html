@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Customers</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/customers.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li class="active"><a href="customers.html">Customers</a></li>
+            <li><a href="queries.html">Queries</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Customer Management</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Actions -->
+        <div class="actions-bar">
+            <div class="search-filter">
+                <input type="text" id="search-input" placeholder="Search by name, email, or phone...">
+                <select id="status-filter">
+                    <option value="all">All Customers</option>
+                    <option value="active">Active</option>
+                    <option value="blocked">Blocked</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Customers Table -->
+        <div class="table-container">
+            <table class="admin-table" id="customers-table">
+                <thead>
+                    <tr>
+                        <th>Customer</th>
+                        <th>Contact Info</th>
+                        <th>Joined On</th>
+                        <th>Total Orders</th>
+                        <th>Total Spent</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="customers-body">
+                    <tr><td colspan="7" style="text-align: center;">Loading customers...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/customers.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>
+
+
+
+
+

@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest Admin - Users</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">🛋️ FoldNest</div>
+      <ul class="sidebar-nav">
+        <li><a href="dashboard.html"><span class="nav-icon">📊</span><span>Dashboard</span></a></li>
+        <li><a href="orders.html"><span class="nav-icon">📦</span><span>Orders</span></a></li>
+        <li><a href="products.html"><span class="nav-icon">🏷️</span><span>Products</span></a></li>
+        <li><a href="users.html" class="active"><span class="nav-icon">👥</span><span>Users</span></a></li>
+        <li><a href="#" onclick="adminLogout()"><span class="nav-icon">🚪</span><span>Logout</span></a></li>
+      </ul>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-topbar"><h1>👥 User Management</h1></div>
+
+      <div class="admin-table-wrapper">
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Email</th><th>Orders</th><th>Spent</th><th>Status</th><th>Action</th></tr></thead>
+            <tbody id="usersTableBody"><tr><td colspan="7" class="admin-loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script>
+    const admin = JSON.parse(localStorage.getItem('foldnest_admin'));
+    if (!admin) window.location.href = 'login.html';
+    function adminLogout() { localStorage.removeItem('foldnest_admin'); localStorage.removeItem('foldnest_admin_token'); window.location.href = 'login.html'; }
+
+    document.addEventListener('DOMContentLoaded', loadUsers);
+
+    async function loadUsers() {
+      try {
+        const res = await fetch(ADMIN_API_URL + '/get_all_users.php');
+        const data = await res.json();
+        const tbody = document.getElementById('usersTableBody');
+
+        tbody.innerHTML = (data.users || []).map(u => {
+          const isActive = u.is_active == 1;
+          const badge = isActive ? '<span class="badge badge-active">Active</span>' : '<span class="badge badge-blocked">Blocked</span>';
+          const btnText = isActive ? 'Block' : 'Unblock';
+          const btnClass = isActive ? 'admin-btn-danger' : 'admin-btn-success';
+          return `<tr>
+            <td>${u.id}</td>
+            <td>${u.full_name}</td>
+            <td>${u.email}</td>
+            <td>${u.order_count || 0}</td>
+            <td>₹${parseFloat(u.total_spent || 0).toLocaleString('en-IN')}</td>
+            <td>${badge}</td>
+            <td><button class="admin-btn admin-btn-sm ${btnClass}" onclick="toggleUser(${u.id}, ${isActive ? 0 : 1})">${btnText}</button></td>
+          </tr>`;
+        }).join('') || '<tr><td colspan="7">No users</td></tr>';
+      } catch (err) { console.error(err); }
+    }
+
+    async function toggleUser(userId, newStatus) {
+      const action = newStatus ? 'unblock' : 'block';
+      if (!confirm(`Are you sure you want to ${action} this user?`)) return;
+      try {
+        await fetch(ADMIN_API_URL + '/toggle_user_status.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ user_id: userId, is_active: newStatus })
+        });
+        loadUsers();
+      } catch (err) { alert('Error updating user'); }
+    }
+  </script>
+</body>
+</html>

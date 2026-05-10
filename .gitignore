@@ -1,0 +1,26 @@
+# Environment Variables
+.env
+.env.local
+
+# Database
+db/*.sql.gz
+db/*.sql.bak
+
+# Node (For Frontend phase later)
+node_modules/
+dist/
+build/
+npm-debug.log
+
+# Composer (If used later)
+vendor/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# IDEs
+.vscode/
+.idea/
+*.suo
+*.user

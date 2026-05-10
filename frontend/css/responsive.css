@@ -1,0 +1,47 @@
+/* =========================================
+   RESPONSIVE STYLES
+   ========================================= */
+
+@media (max-width: 1024px) {
+  
+  .hero {
+    gap: 40px;
+    padding: 40px;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.8rem;
+  }
+}
+
+@media (max-width: 768px) {
+  
+  .navbar {
+    flex-direction: column;
+  }
+  
+  .nav-links {
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 15px;
+  }
+  
+  #searchBar {
+    width: 100%;
+    margin-top: 15px;
+  }
+  
+  .hero {
+    grid-template-columns: 1fr;
+    text-align: center;
+    padding: 30px 20px;
+  }
+  
+  .hero-text h1 {
+    font-size: 2.2rem;
+  }
+  
+  section {
+    padding: 40px 5%;
+  }
+}

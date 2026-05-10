@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest Admin - Login</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body class="admin-login-page">
+  <div class="admin-login-wrapper">
+    <div class="admin-login-card">
+      <div class="admin-login-brand">
+        <h1>FoldNest</h1>
+        <p>Admin Panel</p>
+      </div>
+      <form onsubmit="return false;">
+        <div class="admin-input-group">
+          <label>Username or Email</label>
+          <input type="text" id="adminLogin" placeholder="admin@foldnest.com" required>
+        </div>
+        <div class="admin-input-group">
+          <label>Password</label>
+          <input type="password" id="adminPassword" placeholder="Enter password" required>
+        </div>
+        <button class="admin-btn admin-btn-primary" onclick="adminLoginSubmit()" style="width:100%;">Login</button>
+        <p id="adminLoginMsg" style="text-align:center; margin-top:15px; font-weight:500;"></p>
+      </form>
+      <p style="text-align:center; margin-top:20px; font-size:0.8rem; color:#666;">
+        <a href="../pages/login.html" style="color:#666;">← Back to Store</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script>
+    // Check if already logged in
+    const admin = JSON.parse(localStorage.getItem('foldnest_admin'));
+    if (admin) window.location.href = 'dashboard.html';
+
+    async function adminLoginSubmit() {
+      const login = document.getElementById('adminLogin').value.trim();
+      const password = document.getElementById('adminPassword').value;
+      const msg = document.getElementById('adminLoginMsg');
+
+      if (!login || !password) { msg.style.color = 'red'; msg.textContent = 'Fill all fields'; return; }
+      msg.style.color = '#666'; msg.textContent = 'Logging in...';
+
+      try {
+        const res = await fetch(ADMIN_API_URL + '/admin_login.php', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ username_or_email: login, password: password })
+        });
+        const data = await res.json();
+        if (res.ok) {
+          localStorage.setItem('foldnest_admin', JSON.stringify(data.admin));
+          localStorage.setItem('foldnest_admin_token', data.token);
+          msg.style.color = '#16a34a'; msg.textContent = 'Login successful!';
+          setTimeout(() => window.location.href = 'dashboard.html', 800);
+        } else {
+          msg.style.color = 'red'; msg.textContent = data.message || 'Login failed';
+        }
+      } catch (err) { msg.style.color = 'red'; msg.textContent = 'Network error'; }
+    }
+  </script>
+</body>
+</html>

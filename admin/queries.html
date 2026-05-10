@@ -1,0 +1,128 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Contact Queries</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/queries.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li class="active"><a href="queries.html">Queries</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Contact Queries Support</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Actions -->
+        <div class="actions-bar">
+            <div class="search-filter">
+                <input type="text" id="search-input" placeholder="Search by name, email, or subject...">
+                <select id="status-filter">
+                    <option value="all">All Queries</option>
+                    <option value="unread">Unread Needs Action</option>
+                    <option value="read">Read</option>
+                    <option value="resolved">Resolved</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Queries Table -->
+        <div class="table-container">
+            <table class="admin-table" id="queries-table">
+                <thead>
+                    <tr>
+                        <th>Status</th>
+                        <th>Date</th>
+                        <th>Customer</th>
+                        <th>Subject</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="queries-body">
+                    <tr><td colspan="5" style="text-align: center;">Loading queries...</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Query Details & Reply Modal -->
+    <div id="query-modal" class="modal-overlay">
+        <div class="modal-content query-modal-content">
+            <div class="modal-header">
+                <h2>Support Ticket #<span id="modal-ticket-id"></span></h2>
+                <button class="close-btn" onclick="closeQueryModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="query-info">
+                    <div class="info-row">
+                        <strong>From:</strong> <span id="q-name"></span> &lt;<span id="q-email" class="highlight-email"></span>&gt;
+                    </div>
+                    <div class="info-row">
+                        <strong>Phone:</strong> <span id="q-phone"></span>
+                    </div>
+                    <div class="info-row">
+                        <strong>Subject:</strong> <span id="q-subject" style="font-weight:600"></span>
+                    </div>
+                    <div class="message-box" id="q-message"></div>
+                </div>
+
+                <hr class="divider">
+
+                <form id="reply-form">
+                    <input type="hidden" id="query_id" name="id">
+                    <input type="hidden" id="query_email" name="email">
+                    <input type="hidden" id="query_name" name="name">
+                    <input type="hidden" id="query_subject" name="subject">
+                    
+                    <div class="form-group">
+                        <label>Send Email Reply via SMTP</label>
+                        <textarea id="reply_message" name="reply_message" rows="5" required placeholder="Type your professional response here..."></textarea>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary btn-mark-resolved" onclick="markAsResolved()">Just Mark Resolved</button>
+                        <button type="submit" class="btn-primary" id="send-btn">Send Email & Resolve</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/queries.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>
+
+
+
+
+

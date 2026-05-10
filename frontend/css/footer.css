@@ -1,0 +1,54 @@
+/* =========================================
+   NEWSLETTER
+   ========================================= */
+
+.newsletter {
+  background: var(--card-bg);
+  padding: 50px 8%;
+  text-align: center;
+  border-top: 1px solid var(--border-color);
+}
+
+.newsletter h2 {
+  margin-bottom: 15px;
+}
+
+.newsletter p {
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.newsletter-form {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  max-width: 500px;
+  margin: auto;
+}
+
+.newsletter-form input {
+  flex: 1;
+  padding: 12px 15px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  outline: none;
+}
+
+@media(max-width: 768px) {
+  .newsletter-form {
+    flex-direction: column;
+  }
+}
+
+/* =========================================
+   FOOTER
+   ========================================= */
+
+footer {
+  background: var(--footer-bg);
+  color: white;
+  text-align: center;
+  padding: 30px;
+}

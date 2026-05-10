@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest - Track Your Order</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tracking.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='../index.html'">FoldNest</div>
+      <input type="text" id="searchBar" placeholder="Search furniture..." onkeyup="searchProducts()">
+      <ul class="nav-links">
+        <li><button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" aria-label="Toggle theme"></button></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="order_history.html">Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="active">
+    <div class="tracking-container">
+      <h1>ðŸ“¦ Track Your Order</h1>
+      <p class="tracking-subtitle">Enter your tracking ID to see the real-time status of your order.</p>
+
+      <!-- Search Box -->
+      <div class="tracking-search">
+        <input type="text" id="trackingInput" placeholder="Enter Tracking ID (e.g., TRK202605091234)" maxlength="20">
+        <button class="btn" onclick="searchTracking()">Track</button>
+      </div>
+
+      <!-- Results -->
+      <div id="trackingResult" style="display:none;">
+        <!-- Order Info -->
+        <div class="tracking-info-card">
+          <div class="tracking-info-grid">
+            <div><span class="label">Tracking ID</span><span class="value" id="trkId"></span></div>
+            <div><span class="label">Order Date</span><span class="value" id="trkDate"></span></div>
+            <div><span class="label">Status</span><span class="value" id="trkStatusBadge"></span></div>
+            <div><span class="label">Est. Delivery</span><span class="value" id="trkDelivery"></span></div>
+          </div>
+        </div>
+
+        <!-- Timeline -->
+        <div class="timeline-wrapper">
+          <h3>Order Progress</h3>
+          <div class="timeline" id="trackingTimeline"></div>
+        </div>
+      </div>
+
+      <!-- Error State -->
+      <div id="trackingError" style="display:none;" class="empty-state">
+        <div class="empty-icon">ðŸ”</div>
+        <h3>Order Not Found</h3>
+        <p>We couldn't find an order with that tracking ID. Please check and try again.</p>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <h3>FoldNest Furniture</h3>
+    <p>Smart Furniture For Smart Homes © 2026</p>
+  </footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="../js/tracking.js"></script>
+</body>
+</html>
+

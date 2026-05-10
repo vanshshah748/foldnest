@@ -1,0 +1,129 @@
+{
+	"info": {
+		"_postman_id": "e95dc6c2-40fc-4cdd-bb85-055172aa4c5d",
+		"name": "E-Commerce Major Project",
+		"description": "API endpoints for the Final Year E-Commerce Project spanning Authentication, Products, Cart, and AI logic.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Sprint 1: Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"full_name\": \"Postman Tester\",\n    \"email\": \"tester@example.com\",\n    \"password\": \"postman123\"\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/auth_register.php"
+					}
+				},
+				{
+					"name": "Login User",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"tester@example.com\",\n    \"password\": \"postman123\"\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/auth_login.php"
+					}
+				}
+			]
+		},
+		{
+			"name": "Sprint 2: Products & Categories",
+			"item": [
+				{
+					"name": "Get All Categories",
+					"request": { "method": "GET", "url": "http://localhost/Final%20Year%20Project/backend/api/get_categories.php" }
+				},
+				{
+					"name": "Get All Products",
+					"request": { "method": "GET", "url": "http://localhost/Final%20Year%20Project/backend/api/get_products.php" }
+				},
+				{
+					"name": "Get Product by ID",
+					"request": { "method": "GET", "url": "http://localhost/Final%20Year%20Project/backend/api/get_product.php?id=1" }
+				},
+				{
+					"name": "Search Products",
+					"request": { "method": "GET", "url": "http://localhost/Final%20Year%20Project/backend/api/search_products.php?q=cotton" }
+				}
+			]
+		},
+		{
+			"name": "Sprint 3: Cart & Orders",
+			"item": [
+				{
+					"name": "Add to Cart",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"product_id\": 1,\n    \"quantity\": 2\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/cart_add.php"
+					}
+				},
+				{
+					"name": "View Cart",
+					"request": { "method": "GET", "url": "http://localhost/Final%20Year%20Project/backend/api/cart_view.php?user_id=1" }
+				},
+				{
+					"name": "Remove from Cart",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1,\n    \"product_id\": 1\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/cart_remove.php"
+					}
+				},
+				{
+					"name": "Place Order",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"user_id\": 1\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/place_order.php"
+					}
+				}
+			]
+		},
+		{
+			"name": "Sprint 4 & 5: AI Integrations",
+			"item": [
+				{
+					"name": "Chat with AI",
+					"request": {
+						"method": "POST",
+						"header": [{"key": "Content-Type", "value": "application/json"}],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"message\": \"What is your return policy?\"\n}"
+						},
+						"url": "http://localhost/Final%20Year%20Project/backend/api/chat.php"
+					}
+				},
+				{
+					"name": "AI Product Recommendations",
+					"request": {
+						"method": "GET",
+						"url": "http://localhost/Final%20Year%20Project/backend/api/recommendations.php?product_id=1"
+					}
+				}
+			]
+		}
+	]
+}

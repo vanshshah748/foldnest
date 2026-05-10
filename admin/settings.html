@@ -1,0 +1,105 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Settings</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/settings.css">
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="queries.html">Queries</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li class="active"><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Platform Settings</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <div class="settings-grid">
+            
+            <!-- Change Password Panel -->
+            <div class="settings-panel">
+                <h3>Admin Security</h3>
+                <p class="panel-desc">Update your administrator password.</p>
+                
+                <form id="password-form">
+                    <div class="form-group">
+                        <label>Current Password</label>
+                        <input type="password" id="current_password" name="current_password" required>
+                    </div>
+                    <div class="form-group">
+                        <label>New Password</label>
+                        <input type="password" id="new_password" name="new_password" required minlength="6">
+                    </div>
+                    <div class="form-group">
+                        <label>Confirm New Password</label>
+                        <input type="password" id="confirm_password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn-primary" id="pwd-btn">Update Password</button>
+                </form>
+            </div>
+
+            <!-- Global Store Settings Panel (Visual Representation) -->
+            <div class="settings-panel">
+                <h3>Store Configuration</h3>
+                <p class="panel-desc">Manage global store preferences.</p>
+                
+                <form id="store-form" onsubmit="event.preventDefault(); showToast('Store settings saved successfully!');">
+                    <div class="form-group">
+                        <label>Store Name</label>
+                        <input type="text" value="FoldNest E-Commerce" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Email (For support)</label>
+                        <input type="email" value="support@foldnest.com" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Base Currency</label>
+                        <select>
+                            <option value="INR">Indian Rupee (â‚¹)</option>
+                            <option value="USD">US Dollar ($)</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn-primary">Save Configuration</button>
+                </form>
+            </div>
+
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/settings.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>
+
+
+
+
+

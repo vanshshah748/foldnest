@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest - Checkout</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="../css/navbar.css">
+  <link rel="stylesheet" href="../css/footer.css">
+  <link rel="stylesheet" href="../css/responsive.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/animations.css">
+  <link rel="stylesheet" href="../css/tracking.css">
+</head>
+<body>
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='../index.html'">FoldNest</div>
+      <ul class="nav-links">
+        <li><button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" aria-label="Toggle theme"></button></li>
+        <li><a href="../index.html">Home</a></li>
+        <li><a href="products.html">Products</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+        <li><a href="order_history.html">Orders</a></li>
+        <li><a href="cart.html">Cart</a></li>
+        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <section class="active">
+    <div class="checkout-container">
+      <h1 style="margin-bottom:10px;">ðŸ›’ Checkout</h1>
+
+      <!-- Step Indicators -->
+      <div class="checkout-steps">
+        <div class="step-item active" id="step1"><span class="step-num">1</span> Address</div>
+        <div class="step-item" id="step2"><span class="step-num">2</span> Payment</div>
+        <div class="step-item" id="step3"><span class="step-num">3</span> Review</div>
+      </div>
+
+      <!-- Step 1: Select Address -->
+      <div id="checkoutStep1" class="checkout-section">
+        <h2>ðŸ“ Select Delivery Address</h2>
+        <div id="checkoutAddresses"><div class="loading-spinner"><div class="spinner"></div><p>Loading addresses...</p></div></div>
+        <p style="margin-top:15px;"><a href="addresses.html" style="color:var(--primary-color);">+ Add New Address</a></p>
+        <div style="margin-top:20px; text-align:right;">
+          <button class="btn" onclick="goToStep(2)">Continue to Payment â†’</button>
+        </div>
+      </div>
+
+      <!-- Step 2: Payment Method -->
+      <div id="checkoutStep2" class="checkout-section" style="display:none;">
+        <h2>ðŸ’³ Select Payment Method</h2>
+        <div id="paymentOptions">
+          <div class="payment-option selected" onclick="selectPayment(this, 'COD')"><span style="font-size:1.2rem;">ðŸ’µ</span><div><strong>Cash on Delivery</strong><br><small>Pay when your order arrives</small></div></div>
+          <div class="payment-option" onclick="selectPayment(this, 'UPI')"><span style="font-size:1.2rem;">ðŸ“±</span><div><strong>UPI Payment</strong><br><small>Google Pay, PhonePe, Paytm</small></div></div>
+          <div class="payment-option" onclick="selectPayment(this, 'Card')"><span style="font-size:1.2rem;">ðŸ’³</span><div><strong>Credit / Debit Card</strong><br><small>Visa, Mastercard, RuPay</small></div></div>
+          <div class="payment-option" onclick="selectPayment(this, 'NetBanking')"><span style="font-size:1.2rem;">ðŸ¦</span><div><strong>Net Banking</strong><br><small>All major banks supported</small></div></div>
+        </div>
+        <div style="margin-top:20px; display:flex; justify-content:space-between;">
+          <button class="btn btn-secondary" onclick="goToStep(1)">â† Back</button>
+          <button class="btn" onclick="goToStep(3)">Review Order â†’</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Review & Place Order -->
+      <div id="checkoutStep3" class="checkout-section" style="display:none;">
+        <h2>ðŸ“‹ Order Summary</h2>
+        <div id="orderReviewAddress" style="margin-bottom:20px; padding:15px; background:var(--bg-color); border-radius:12px;"></div>
+        <div id="orderReviewItems"></div>
+        <div style="margin-top:20px; padding:15px; background:var(--bg-color); border-radius:12px;">
+          <p><strong>Payment:</strong> <span id="reviewPayment">COD</span></p>
+          <p style="font-size:1.2rem; margin-top:10px;"><strong>Total: â‚¹<span id="reviewTotal">0</span></strong></p>
+        </div>
+        <div style="margin-top:20px; display:flex; justify-content:space-between;">
+          <button class="btn btn-secondary" onclick="goToStep(2)">â† Back</button>
+          <button class="btn" id="placeOrderBtn" onclick="placeOrder()" style="background:#16a34a;">âœ… Place Order</button>
+        </div>
+        <p id="checkoutMessage" style="text-align:center; margin-top:15px; font-weight:600;"></p>
+      </div>
+
+      <!-- Success State -->
+      <div id="orderSuccess" class="empty-state" style="display:none;">
+        <div class="empty-icon">ðŸŽ‰</div>
+        <h3>Order Placed Successfully!</h3>
+        <p>Tracking ID: <strong id="successTrackingId"></strong></p>
+        <p>Estimated Delivery: <strong id="successDelivery"></strong></p>
+        <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
+          <a href="order_history.html" class="btn">View Orders</a>
+          <a href="" id="successTrackLink" class="btn" style="background:#2563eb;">Track Order</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer><h3>FoldNest Furniture</h3><p>Smart Furniture For Smart Homes © 2026</p></footer>
+
+  <script src="../js/config.js"></script>
+  <script src="../js/main.js"></script>
+  <script src="../js/checkout.js"></script>
+</body>
+</html>
+

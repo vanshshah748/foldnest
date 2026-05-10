@@ -1,0 +1,154 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Orders</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/orders.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li class="active"><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="queries.html">Queries</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Order Management</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Actions -->
+        <div class="actions-bar">
+            <div class="search-filter">
+                <input type="text" id="search-input" placeholder="Search by Order ID, Tracking ID, or Email...">
+                <select id="status-filter">
+                    <option value="all">All Statuses</option>
+                    <option value="pending">Pending</option>
+                    <option value="confirmed">Confirmed</option>
+                    <option value="packed">Packed</option>
+                    <option value="shipped">Shipped</option>
+                    <option value="out_for_delivery">Out for Delivery</option>
+                    <option value="delivered">Delivered</option>
+                    <option value="cancelled">Cancelled</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Orders Table -->
+        <div class="table-container">
+            <table class="admin-table" id="orders-table">
+                <thead>
+                    <tr>
+                        <th>Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="orders-body">
+                    <tr>
+                        <td colspan="6" style="text-align: center;">Loading orders...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Order Details Modal -->
+    <div id="order-modal" class="modal-overlay">
+        <div class="modal-content order-modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Order Details</h2>
+                <button class="close-btn" onclick="closeOrderModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="order-info-grid">
+                    <div class="info-card">
+                        <h3>Customer Information</h3>
+                        <p id="c-name"></p>
+                        <p id="c-email"></p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Shipping Address</h3>
+                        <p id="c-address"></p>
+                    </div>
+                    <div class="info-card">
+                        <h3>Payment Details</h3>
+                        <p><strong>Method:</strong> <span id="p-method"></span></p>
+                        <p><strong>Status:</strong> <span id="p-status"></span></p>
+                        <p><strong>Amount:</strong> <span id="p-amount" class="highlight-amt"></span></p>
+                    </div>
+                </div>
+
+                <hr class="divider">
+
+                <form id="order-form">
+                    <input type="hidden" id="order_id" name="id">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Order Status</label>
+                            <select id="order_status" name="status" required>
+                                <option value="pending">Pending</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="packed">Packed</option>
+                                <option value="shipped">Shipped</option>
+                                <option value="out_for_delivery">Out for Delivery</option>
+                                <option value="delivered">Delivered</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Tracking ID (Optional)</label>
+                            <input type="text" id="tracking_id" name="tracking_id" placeholder="e.g. BLUEDART1234">
+                        </div>
+                        <div class="form-group">
+                            <label>Estimated Delivery Date</label>
+                            <input type="date" id="estimated_delivery" name="estimated_delivery">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closeOrderModal()">Close</button>
+                        <button type="submit" class="btn-primary" id="save-btn">Update Order</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/orders.js"></script>
+    <script src="js/theme.js"></script>
+</body>
+
+</html>

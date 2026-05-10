@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest Admin - Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">🛋️ FoldNest</div>
+      <ul class="sidebar-nav">
+        <li><a href="dashboard.html"><span class="nav-icon">📊</span><span>Dashboard</span></a></li>
+        <li><a href="orders.html"><span class="nav-icon">📦</span><span>Orders</span></a></li>
+        <li><a href="products.html" class="active"><span class="nav-icon">🏷️</span><span>Products</span></a></li>
+        <li><a href="users.html"><span class="nav-icon">👥</span><span>Users</span></a></li>
+        <li><a href="#" onclick="adminLogout()"><span class="nav-icon">🚪</span><span>Logout</span></a></li>
+      </ul>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-topbar">
+        <h1>🏷️ Product Management</h1>
+        <button class="admin-btn admin-btn-primary" onclick="openProductModal()">+ Add Product</button>
+      </div>
+
+      <div class="admin-table-wrapper">
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead><tr><th>ID</th><th>Name</th><th>Price</th><th>Stock</th><th>Rating</th><th>Status</th><th>Actions</th></tr></thead>
+            <tbody id="productsTableBody"><tr><td colspan="7" class="admin-loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Product Modal -->
+  <div class="admin-modal-overlay" id="productModal">
+    <div class="admin-modal">
+      <h2 id="productModalTitle">Add Product</h2>
+      <input type="hidden" id="editProductId">
+      <div class="admin-input-group"><label>Name *</label><input type="text" id="prodName" placeholder="Product name"></div>
+      <div class="admin-input-group"><label>Description</label><textarea id="prodDesc" rows="3" placeholder="Description" style="width:100%;padding:12px;border-radius:10px;border:1px solid var(--admin-border);background:var(--admin-bg);color:var(--admin-text);font-family:'Poppins',sans-serif;resize:vertical;"></textarea></div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:15px;">
+        <div class="admin-input-group"><label>Price *</label><input type="number" id="prodPrice" placeholder="0.00" step="0.01"></div>
+        <div class="admin-input-group"><label>Old Price</label><input type="number" id="prodOldPrice" placeholder="0.00" step="0.01"></div>
+        <div class="admin-input-group"><label>Stock Quantity *</label><input type="number" id="prodStock" placeholder="0"></div>
+        <div class="admin-input-group"><label>Rating</label><input type="number" id="prodRating" placeholder="0.0" step="0.1" max="5"></div>
+        <div class="admin-input-group"><label>Category ID *</label><input type="number" id="prodCatId" placeholder="1"></div>
+        <div class="admin-input-group"><label>Image URL</label><input type="text" id="prodImage" placeholder="path/to/image.jpg"></div>
+      </div>
+      <div class="admin-modal-actions">
+        <button class="admin-btn admin-btn-outline" onclick="closeProductModal()">Cancel</button>
+        <button class="admin-btn admin-btn-primary" onclick="saveProduct()">Save</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script>
+    const admin = JSON.parse(localStorage.getItem('foldnest_admin'));
+    if (!admin) window.location.href = 'login.html';
+    function adminLogout() { localStorage.removeItem('foldnest_admin'); localStorage.removeItem('foldnest_admin_token'); window.location.href = 'login.html'; }
+
+    document.addEventListener('DOMContentLoaded', loadProducts);
+
+    async function loadProducts() {
+      try {
+        const res = await fetch(API_URL + '/get_products.php');
+        const products = await res.json();
+        const tbody = document.getElementById('productsTableBody');
+        const list = Array.isArray(products) ? products : (products.products || []);
+
+        tbody.innerHTML = list.map(p => `<tr>
+          <td>${p.id}</td>
+          <td>${p.title || p.name}</td>
+          <td>₹${parseFloat(p.price).toLocaleString('en-IN')}</td>
+          <td>${p.stock || p.stock_quantity || 0}</td>
+          <td>★ ${p.rating || 0}</td>
+          <td><span class="badge badge-active">Active</span></td>
+          <td>
+            <button class="admin-btn admin-btn-sm admin-btn-outline" onclick='editProduct(${JSON.stringify(p)})'>Edit</button>
+            <button class="admin-btn admin-btn-sm admin-btn-danger" onclick="deleteProduct(${p.id})">Delete</button>
+          </td>
+        </tr>`).join('') || '<tr><td colspan="7">No products</td></tr>';
+      } catch (err) { console.error(err); }
+    }
+
+    function openProductModal() {
+      document.getElementById('productModalTitle').textContent = 'Add Product';
+      document.getElementById('editProductId').value = '';
+      ['prodName','prodDesc','prodPrice','prodOldPrice','prodStock','prodRating','prodCatId','prodImage'].forEach(id => document.getElementById(id).value = '');
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function editProduct(p) {
+      document.getElementById('productModalTitle').textContent = 'Edit Product';
+      document.getElementById('editProductId').value = p.id;
+      document.getElementById('prodName').value = p.title || p.name || '';
+      document.getElementById('prodDesc').value = p.description || '';
+      document.getElementById('prodPrice').value = p.price || '';
+      document.getElementById('prodOldPrice').value = p.oldPrice || p.old_price || '';
+      document.getElementById('prodStock').value = p.stock || p.stock_quantity || '';
+      document.getElementById('prodRating').value = p.rating || '';
+      document.getElementById('prodCatId').value = p.category_id || '';
+      document.getElementById('prodImage').value = p.image || p.image_url || '';
+      document.getElementById('productModal').classList.add('active');
+    }
+
+    function closeProductModal() { document.getElementById('productModal').classList.remove('active'); }
+
+    async function saveProduct() {
+      const editId = document.getElementById('editProductId').value;
+      const payload = {
+        name: document.getElementById('prodName').value,
+        description: document.getElementById('prodDesc').value,
+        price: document.getElementById('prodPrice').value,
+        old_price: document.getElementById('prodOldPrice').value || 0,
+        stock_quantity: document.getElementById('prodStock').value || 0,
+        rating: document.getElementById('prodRating').value || 0,
+        category_id: document.getElementById('prodCatId').value,
+        image_url: document.getElementById('prodImage').value
+      };
+
+      if (!payload.name || !payload.price || !payload.category_id) { alert('Fill required fields'); return; }
+
+      const url = editId ? ADMIN_API_URL + '/update_product.php' : ADMIN_API_URL + '/add_product.php';
+      if (editId) payload.product_id = editId;
+
+      try {
+        const res = await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+        if (res.ok) { closeProductModal(); loadProducts(); }
+        else { const d = await res.json(); alert(d.message); }
+      } catch (err) { alert('Error saving product'); }
+    }
+
+    async function deleteProduct(id) {
+      if (!confirm('Delete this product?')) return;
+      try {
+        await fetch(ADMIN_API_URL + '/delete_product.php', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ product_id: id }) });
+        loadProducts();
+      } catch (err) { alert('Error deleting product'); }
+    }
+  </script>
+</body>
+</html>

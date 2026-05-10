@@ -1,0 +1,99 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Reports & Analytics</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/reports.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <!-- jsPDF & AutoTable for PDF Export -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="products.html">Products</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="queries.html">Queries</a></li>
+            <li class="active"><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Reports & Analytics</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Actions -->
+        <div class="actions-bar">
+            <div class="search-filter">
+                <select id="report-type" onchange="loadReport()">
+                    <option value="sales">Monthly Sales Revenue</option>
+                    <option value="top_products">Top Selling Products</option>
+                    <option value="low_stock">Low Stock Alerts</option>
+                    <option value="top_customers">Most Active Customers</option>
+                    <option value="cancellations">Order Cancellations</option>
+                </select>
+            </div>
+            <div class="export-buttons">
+                <button class="btn-secondary" onclick="exportCSV()">Export CSV</button>
+                <button class="btn-primary" onclick="exportPDF()">Export PDF</button>
+            </div>
+        </div>
+
+        <div class="reports-grid">
+            <!-- Chart Container -->
+            <div class="chart-panel">
+                <h3 id="chart-title">Data Visualization</h3>
+                <div class="canvas-wrapper">
+                    <canvas id="mainChart"></canvas>
+                </div>
+            </div>
+
+            <!-- Data Table Container -->
+            <div class="data-panel table-container">
+                <h3 id="table-title">Raw Data</h3>
+                <table class="admin-table" id="report-table">
+                    <thead id="report-thead">
+                        <!-- Dynamic Headers -->
+                    </thead>
+                    <tbody id="report-tbody">
+                        <tr><td colspan="3" style="text-align: center;">Loading data...</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <div id="toast" class="toast"></div>
+    <script src="js/reports.js"></script>
+<script src="js/theme.js"></script>
+</body>
+</html>
+
+
+
+
+

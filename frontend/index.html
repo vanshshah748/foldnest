@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest Furniture - Home</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/footer.css">
+  <link rel="stylesheet" href="css/products.css">
+  <link rel="stylesheet" href="css/responsive.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/animations.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="navbar">
+      <div class="logo" onclick="window.location.href='index.html'">FoldNest</div>
+      <input type="text" id="searchBar" placeholder="Search furniture..." onkeyup="searchProducts()">
+      <ul class="nav-links">
+        <li><button class="theme-toggle" onclick="toggleTheme()" title="Toggle Dark Mode" aria-label="Toggle theme"></button></li>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="pages/products.html">Products</a></li>
+        <li><a href="pages/about.html">About</a></li>
+        <li><a href="pages/contact.html">Contact</a></li>
+        <li><a href="pages/order_history.html">Orders</a></li>
+        <li><a href="pages/cart.html">Cart</a></li>
+        <li><a href="pages/profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- HOME HERO -->
+  <section id="home" class="active">
+    <div class="hero">
+      <div class="hero-text">
+        <h1>Smart Foldable Furniture For Modern Living</h1>
+        <p>Discover premium foldable furniture for smart homes and compact spaces.</p>
+        <button class="btn" onclick="window.location.href='pages/products.html'">Shop Now</button>
+      </div>
+      <img src="assets/images/sofa.jpg" alt="Foldable Sofa" onclick="openModal(this)">
+    </div>
+  </section>
+
+  <!-- FEATURED PRODUCTS -->
+  <section id="featured-products" class="products active">
+    <!-- Products injected dynamically -->
+  </section>
+
+  <!-- FAQ -->
+  <section class="active faq-container">
+    <h2 style="text-align:center; margin-bottom: 30px;">Frequently Asked Questions</h2>
+    <div class="faq-item">
+      <div class="faq-question">What is the warranty period? <span>+</span></div>
+      <div class="faq-answer">
+        <p>All our furniture comes with a 1-year standard warranty covering manufacturing defects.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Do you offer free delivery? <span>+</span></div>
+      <div class="faq-answer">
+        <p>Yes, we offer free delivery on all orders above Ã¢â€šÂ¹5000 across the country.</p>
+      </div>
+    </div>
+    <div class="faq-item">
+      <div class="faq-question">Can I return a product? <span>+</span></div>
+      <div class="faq-answer">
+        <p>We have a 7-day hassle-free return policy if the product is damaged or defective.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- NEWSLETTER -->
+  <section class="newsletter active">
+    <h2>Subscribe to our Newsletter</h2>
+    <p>Get the latest updates on new products and upcoming sales.</p>
+    <div class="newsletter-form">
+      <input type="email" placeholder="Enter your email address">
+      <button class="btn" onclick="showToast('Subscribed Successfully!')">Subscribe</button>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <h3>FoldNest Furniture</h3>
+    <p>Smart Furniture For Smart Homes Â© 2026</p>
+  </footer>
+
+  <!-- MODAL -->
+  <div id="productModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div id="caption"></div>
+  </div>
+
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/products.js"></script>
+  <script src="js/cart.js"></script>
+  <script src="js/animations.js"></script>
+
+</body>
+
+</html>
+

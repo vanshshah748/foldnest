@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>FoldNest Admin - Orders</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/admin.css">
+</head>
+<body>
+  <div class="admin-layout">
+    <aside class="admin-sidebar">
+      <div class="sidebar-brand">🛋️ FoldNest</div>
+      <ul class="sidebar-nav">
+        <li><a href="dashboard.html"><span class="nav-icon">📊</span><span>Dashboard</span></a></li>
+        <li><a href="orders.html" class="active"><span class="nav-icon">📦</span><span>Orders</span></a></li>
+        <li><a href="products.html"><span class="nav-icon">🏷️</span><span>Products</span></a></li>
+        <li><a href="users.html"><span class="nav-icon">👥</span><span>Users</span></a></li>
+        <li><a href="#" onclick="adminLogout()"><span class="nav-icon">🚪</span><span>Logout</span></a></li>
+      </ul>
+    </aside>
+    <main class="admin-main">
+      <div class="admin-topbar"><h1>📦 Order Management</h1></div>
+      
+      <div class="admin-table-wrapper">
+        <div class="admin-table-header">
+          <h2>All Orders</h2>
+          <div class="admin-filters">
+            <select id="statusFilter" onchange="loadAdminOrders()">
+              <option value="all">All Status</option>
+              <option value="pending">Pending</option><option value="confirmed">Confirmed</option>
+              <option value="packed">Packed</option><option value="shipped">Shipped</option>
+              <option value="out_for_delivery">Out for Delivery</option><option value="delivered">Delivered</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <input type="text" id="orderSearch" placeholder="Search tracking ID..." onkeyup="loadAdminOrders()">
+          </div>
+        </div>
+        <div style="overflow-x:auto;">
+          <table class="admin-table">
+            <thead>
+              <tr><th>Order ID</th><th>Tracking</th><th>Customer</th><th>Amount</th><th>Status</th><th>Date</th><th>Action</th></tr>
+            </thead>
+            <tbody id="ordersTableBody"><tr><td colspan="7" class="admin-loading">Loading...</td></tr></tbody>
+          </table>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Status Update Modal -->
+  <div class="admin-modal-overlay" id="statusModal">
+    <div class="admin-modal">
+      <h2>Update Order Status</h2>
+      <input type="hidden" id="modalOrderId">
+      <div class="admin-input-group">
+        <label>New Status</label>
+        <select id="modalNewStatus">
+          <option value="pending">Pending</option><option value="confirmed">Confirmed</option>
+          <option value="packed">Packed</option><option value="shipped">Shipped</option>
+          <option value="out_for_delivery">Out for Delivery</option><option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+        </select>
+      </div>
+      <div class="admin-modal-actions">
+        <button class="admin-btn admin-btn-outline" onclick="closeModal()">Cancel</button>
+        <button class="admin-btn admin-btn-primary" onclick="updateStatus()">Update</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../js/config.js"></script>
+  <script>
+    const admin = JSON.parse(localStorage.getItem('foldnest_admin'));
+    if (!admin) window.location.href = 'login.html';
+    function adminLogout() { localStorage.removeItem('foldnest_admin'); localStorage.removeItem('foldnest_admin_token'); window.location.href = 'login.html'; }
+
+    document.addEventListener('DOMContentLoaded', loadAdminOrders);
+
+    async function loadAdminOrders() {
+      const status = document.getElementById('statusFilter').value;
+      const search = document.getElementById('orderSearch').value.trim();
+      let url = ADMIN_API_URL + '/get_all_orders.php?status=' + status;
+      if (search) url += '&search=' + encodeURIComponent(search);
+
+      try {
+        const res = await fetch(url);
+        const data = await res.json();
+        const tbody = document.getElementById('ordersTableBody');
+
+        if (data.orders && data.orders.length > 0) {
+          tbody.innerHTML = data.orders.map(o => {
+            const date = new Date(o.created_at).toLocaleDateString('en-IN', { day:'2-digit', month:'short', year:'numeric' });
+            const badge = `<span class="badge badge-${o.status}">${o.status.replace(/_/g,' ')}</span>`;
+            return `<tr>
+              <td>#${o.id}</td>
+              <td>${o.tracking_id || 'N/A'}</td>
+              <td>${o.customer_name}</td>
+              <td>₹${o.total_amount.toLocaleString('en-IN')}</td>
+              <td>${badge}</td>
+              <td>${date}</td>
+              <td><button class="admin-btn admin-btn-sm admin-btn-outline" onclick="openStatusModal(${o.id}, '${o.status}')">Update</button></td>
+            </tr>`;
+          }).join('');
+        } else {
+          tbody.innerHTML = '<tr><td colspan="7" style="text-align:center;padding:30px;">No orders found</td></tr>';
+        }
+      } catch (err) { console.error(err); }
+    }
+
+    function openStatusModal(orderId, currentStatus) {
+      document.getElementById('modalOrderId').value = orderId;
+      document.getElementById('modalNewStatus').value = currentStatus;
+      document.getElementById('statusModal').classList.add('active');
+    }
+    function closeModal() { document.getElementById('statusModal').classList.remove('active'); }
+
+    async function updateStatus() {
+      const orderId = document.getElementById('modalOrderId').value;
+      const status = document.getElementById('modalNewStatus').value;
+      try {
+        const res = await fetch(ADMIN_API_URL + '/update_order_status.php', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ order_id: orderId, status: status })
+        });
+        const data = await res.json();
+        if (res.ok) { closeModal(); loadAdminOrders(); }
+        else { alert(data.message); }
+      } catch (err) { alert('Error updating status'); }
+    }
+  </script>
+</body>
+</html>

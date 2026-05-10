@@ -1,0 +1,204 @@
+/* =========================================
+   BASE STYLES & RESETS
+   ========================================= */
+
+:root {
+  /* Premium Minimalist Palette */
+  --bg-color: #faf9f6; /* Off-white luxury background */
+  --text-color: #1a1a1a;
+  --card-bg: #ffffff;
+  --header-bg: rgba(255, 255, 255, 0.95); /* Glass effect preparation */
+  --footer-bg: #111111;
+  --primary-color: #0f172a; /* Deep slate instead of bright blue */
+  --border-color: #eaeaea;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.04); /* Softer, wider shadow */
+}
+
+body.dark-mode {
+  --bg-color: #121212;
+  --text-color: #f5f5f5;
+  --card-bg: #1e1e1e;
+  --header-bg: rgba(30, 30, 30, 0.95);
+  --footer-bg: #000;
+  --primary-color: #ffffff;
+  --border-color: #333;
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Poppins', sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  background: var(--bg-color);
+  color: var(--text-color);
+  line-height: 1.6;
+}
+
+section {
+  padding: 80px 8%;
+  display: none;
+}
+
+section.active {
+  display: block;
+}
+
+/* =========================================
+   TYPOGRAPHY & UTILITIES
+   ========================================= */
+
+h1, h2, h3 {
+  color: var(--text-color);
+  letter-spacing: -0.02em; /* Sleeker heading look */
+}
+
+.success {
+  color: #16a34a;
+  margin-top: 10px;
+}
+
+/* =========================================
+   BUTTONS
+   ========================================= */
+
+.btn {
+  background: var(--primary-color);
+  color: var(--bg-color);
+  border: none;
+  padding: 14px 28px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+body.dark-mode .btn {
+  color: #000;
+}
+
+/* =========================================
+   FORMS & CONTAINERS
+   ========================================= */
+
+.form-container,
+.profile-card,
+.cart-container,
+.payment-container {
+  max-width: 700px;
+  margin: auto;
+  background: var(--card-bg);
+  padding: 50px;
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+}
+
+.input-group {
+  margin-bottom: 24px;
+}
+
+.input-group label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+  color: #555;
+}
+
+body.dark-mode .input-group label {
+  color: #ccc;
+}
+
+.input-group input {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  background: var(--bg-color);
+  color: var(--text-color);
+  outline: none;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.input-group input:focus {
+  border-color: var(--primary-color);
+}
+
+/* =========================================
+   MODAL (IMAGE ZOOM)
+   ========================================= */
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 5000;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.modal-content {
+  display: block;
+  margin: auto;
+  margin-top: 50px;
+  max-width: 80%;
+  max-height: 80vh;
+  border-radius: 20px;
+}
+
+.close {
+  position: absolute;
+  top: 20px;
+  right: 40px;
+  color: white;
+  font-size: 40px;
+  cursor: pointer;
+}
+
+#caption {
+  text-align: center;
+  color: white;
+  margin-top: 20px;
+}
+
+/* =========================================
+   CART & PAYMENT
+   ========================================= */
+
+.payment-methods {
+  display: grid;
+  gap: 15px;
+  margin: 20px 0;
+}
+
+.method {
+  border: 1px solid var(--border-color);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: border-color 0.3s ease;
+}
+
+.method:hover {
+  border-color: var(--primary-color);
+}
+
+.cart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
+  border-bottom: 1px solid var(--border-color);
+}

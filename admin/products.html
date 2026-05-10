@@ -1,0 +1,162 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FoldNest Admin - Products</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <link rel="stylesheet" href="css/products.css">
+</head>
+
+<body>
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-header">
+            <h2>FoldNest <span>Admin</span></h2>
+        </div>
+        <ul class="sidebar-menu">
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li class="active"><a href="products.html">Products</a></li>
+            <li><a href="orders.html">Orders</a></li>
+            <li><a href="customers.html">Customers</a></li>
+            <li><a href="queries.html">Queries</a></li>
+            <li><a href="reports.html">Reports</a></li>
+            <li><a href="settings.html">Settings</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="btn-logout">Logout</button>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <header class="top-header">
+            <div class="header-left">
+                <h1>Product Management</h1>
+            </div>
+            <div class="header-right">
+                <button id="theme-toggle" class="theme-toggle-btn" title="Toggle Theme">☀️</button>
+                <span class="admin-badge" id="admin-name">Super Admin</span>
+            </div>
+        </header>
+
+        <!-- Product Actions -->
+        <div class="actions-bar">
+            <div class="search-filter">
+                <input type="text" id="search-input" placeholder="Search products by name or ID...">
+                <select id="status-filter">
+                    <option value="active">Active Products</option>
+                    <option value="deleted">Trash / Soft Deleted</option>
+                    <option value="all">All Products</option>
+                </select>
+            </div>
+            <button class="btn-primary" onclick="openProductModal()">+ Add New Product</button>
+        </div>
+
+        <!-- Products Table -->
+        <div class="table-container">
+            <table class="admin-table" id="products-table">
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="products-body">
+                    <tr>
+                        <td colspan="7" style="text-align: center;">Loading products...</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Product Modal (Add/Edit) -->
+    <div id="product-modal" class="modal-overlay">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 id="modal-title">Add New Product</h2>
+                <button class="close-btn" onclick="closeProductModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <form id="product-form">
+                    <input type="hidden" id="product_id" name="id">
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label>Product Name *</label>
+                            <input type="text" id="name" name="name" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Slug</label>
+                            <input type="text" id="slug" name="slug" placeholder="e.g. ergonomic-desk">
+                        </div>
+                        <div class="form-group">
+                            <label>Price (â‚¹) *</label>
+                            <input type="number" id="price" name="price" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Old Price (â‚¹)</label>
+                            <input type="number" id="old_price" name="old_price" min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Stock Quantity *</label>
+                            <input type="number" id="stock" name="stock" required min="0">
+                        </div>
+                        <div class="form-group">
+                            <label>Category ID</label>
+                            <input type="number" id="category_id" name="category_id">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Image URL *</label>
+                        <input type="text" id="image_url" name="image_url" required
+                            placeholder="assets/images/products/example.jpg">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Description</label>
+                        <textarea id="description" name="description" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label><input type="checkbox" id="is_active" name="is_active" checked> Active /
+                                Visible</label>
+                        </div>
+                        <div class="form-group">
+                            <label><input type="checkbox" id="is_featured" name="is_featured"> Featured Product</label>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn-secondary" onclick="closeProductModal()">Cancel</button>
+                        <button type="submit" class="btn-primary" id="save-btn">Save Product</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <script src="js/products.js"></script>
+<script src="js/theme.js"></script>
+</body>
+
+</html>
+
+
+
+
