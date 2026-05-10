@@ -2,6 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>FoldNest - Checkout</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,6 +17,11 @@
   <link rel="stylesheet" href="../css/components.css">
   <link rel="stylesheet" href="../css/animations.css">
   <link rel="stylesheet" href="../css/tracking.css">
+  <style>
+    .checkout-icon { display: inline-flex; align-items: center; vertical-align: middle; margin-right: 8px; }
+    .payment-icon { font-size: 1.5rem; margin-right: 15px; color: var(--primary-color); display: flex; align-items: center; }
+    .payment-icon svg { width: 24px; height: 24px; }
+  </style>
 </head>
 <body>
   <header>
@@ -27,14 +35,19 @@
         <li><a href="contact.html">Contact</a></li>
         <li><a href="order_history.html">Orders</a></li>
         <li><a href="cart.html">Cart</a></li>
-        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile</a></li>
+        <li><a href="profile.html" id="authLink" style="display:inline-flex;align-items:center;gap:5px;">
+          <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg> Profile
+        </a></li>
       </ul>
     </nav>
   </header>
 
   <section class="active">
     <div class="checkout-container">
-      <h1 style="margin-bottom:10px;">ðŸ›’ Checkout</h1>
+      <h1 style="margin-bottom:10px;">
+        <span class="checkout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg></span>
+        Checkout
+      </h1>
 
       <!-- Step Indicators -->
       <div class="checkout-steps">
@@ -45,64 +58,92 @@
 
       <!-- Step 1: Select Address -->
       <div id="checkoutStep1" class="checkout-section">
-        <h2>ðŸ“ Select Delivery Address</h2>
+        <h2>
+          <span class="checkout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg></span>
+          Select Delivery Address
+        </h2>
         <div id="checkoutAddresses"><div class="loading-spinner"><div class="spinner"></div><p>Loading addresses...</p></div></div>
-        <p style="margin-top:15px;"><a href="addresses.html" style="color:var(--primary-color);">+ Add New Address</a></p>
+        <p style="margin-top:15px;"><a href="addresses.html" style="color:var(--primary-color); text-decoration:none; font-weight:500;">+ Add New Address</a></p>
         <div style="margin-top:20px; text-align:right;">
-          <button class="btn" onclick="goToStep(2)">Continue to Payment â†’</button>
+          <button class="btn" onclick="goToStep(2)">Continue to Payment &rarr;</button>
         </div>
       </div>
 
       <!-- Step 2: Payment Method -->
       <div id="checkoutStep2" class="checkout-section" style="display:none;">
-        <h2>ðŸ’³ Select Payment Method</h2>
+        <h2>
+          <span class="checkout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg></span>
+          Select Payment Method
+        </h2>
         <div id="paymentOptions">
-          <div class="payment-option selected" onclick="selectPayment(this, 'COD')"><span style="font-size:1.2rem;">ðŸ’µ</span><div><strong>Cash on Delivery</strong><br><small>Pay when your order arrives</small></div></div>
-          <div class="payment-option" onclick="selectPayment(this, 'UPI')"><span style="font-size:1.2rem;">ðŸ“±</span><div><strong>UPI Payment</strong><br><small>Google Pay, PhonePe, Paytm</small></div></div>
-          <div class="payment-option" onclick="selectPayment(this, 'Card')"><span style="font-size:1.2rem;">ðŸ’³</span><div><strong>Credit / Debit Card</strong><br><small>Visa, Mastercard, RuPay</small></div></div>
-          <div class="payment-option" onclick="selectPayment(this, 'NetBanking')"><span style="font-size:1.2rem;">ðŸ¦</span><div><strong>Net Banking</strong><br><small>All major banks supported</small></div></div>
+          <div class="payment-option selected" onclick="selectPayment(this, 'COD')">
+            <div class="payment-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg></div>
+            <div><strong>Cash on Delivery</strong><br><small>Pay when your order arrives</small></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this, 'UPI')">
+            <div class="payment-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg></div>
+            <div><strong>UPI Payment</strong><br><small>Google Pay, PhonePe, Paytm</small></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this, 'Card')">
+            <div class="payment-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="5" width="20" height="14" rx="2"></rect><line x1="2" y1="10" x2="22" y2="10"></line></svg></div>
+            <div><strong>Credit / Debit Card</strong><br><small>Visa, Mastercard, RuPay</small></div>
+          </div>
+          <div class="payment-option" onclick="selectPayment(this, 'NetBanking')">
+            <div class="payment-icon"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 21h18"></path><path d="M3 10h18"></path><path d="M5 6l7-3 7 3"></path><path d="M4 10v11"></path><path d="M20 10v11"></path><path d="M8 14v3"></path><path d="M12 14v3"></path><path d="M16 14v3"></path></svg></div>
+            <div><strong>Net Banking</strong><br><small>All major banks supported</small></div>
+          </div>
         </div>
         <div style="margin-top:20px; display:flex; justify-content:space-between;">
-          <button class="btn btn-secondary" onclick="goToStep(1)">â† Back</button>
-          <button class="btn" onclick="goToStep(3)">Review Order â†’</button>
+          <button class="btn btn-secondary" onclick="goToStep(1)">&larr; Back</button>
+          <button class="btn" onclick="goToStep(3)">Review Order &rarr;</button>
         </div>
       </div>
 
       <!-- Step 3: Review & Place Order -->
       <div id="checkoutStep3" class="checkout-section" style="display:none;">
-        <h2>ðŸ“‹ Order Summary</h2>
+        <h2>
+          <span class="checkout-icon"><svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg></span>
+          Order Summary
+        </h2>
         <div id="orderReviewAddress" style="margin-bottom:20px; padding:15px; background:var(--bg-color); border-radius:12px;"></div>
         <div id="orderReviewItems"></div>
         <div style="margin-top:20px; padding:15px; background:var(--bg-color); border-radius:12px;">
-          <p><strong>Payment:</strong> <span id="reviewPayment">COD</span></p>
-          <p style="font-size:1.2rem; margin-top:10px;"><strong>Total: â‚¹<span id="reviewTotal">0</span></strong></p>
+          <p><strong>Payment Method:</strong> <span id="reviewPayment">COD</span></p>
+          <p style="font-size:1.2rem; margin-top:10px;"><strong>Total Amount: &#8377;<span id="reviewTotal">0</span></strong></p>
         </div>
         <div style="margin-top:20px; display:flex; justify-content:space-between;">
-          <button class="btn btn-secondary" onclick="goToStep(2)">â† Back</button>
-          <button class="btn" id="placeOrderBtn" onclick="placeOrder()" style="background:#16a34a;">âœ… Place Order</button>
+          <button class="btn btn-secondary" onclick="goToStep(2)">&larr; Back</button>
+          <button class="btn" id="placeOrderBtn" onclick="placeOrder()" style="background:#16a34a; display:inline-flex; align-items:center; gap:8px;">
+            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            Place Order
+          </button>
         </div>
         <p id="checkoutMessage" style="text-align:center; margin-top:15px; font-weight:600;"></p>
       </div>
 
       <!-- Success State -->
       <div id="orderSuccess" class="empty-state" style="display:none;">
-        <div class="empty-icon">ðŸŽ‰</div>
+        <div class="empty-icon">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color:#16a34a;"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        </div>
         <h3>Order Placed Successfully!</h3>
         <p>Tracking ID: <strong id="successTrackingId"></strong></p>
         <p>Estimated Delivery: <strong id="successDelivery"></strong></p>
         <div style="display:flex; gap:10px; justify-content:center; margin-top:20px; flex-wrap:wrap;">
-          <a href="order_history.html" class="btn">View Orders</a>
-          <a href="" id="successTrackLink" class="btn" style="background:#2563eb;">Track Order</a>
+          <a href="order_history.html" class="btn">View My Orders</a>
+          <a href="" id="successTrackLink" class="btn" style="background:#2563eb;">Track My Order</a>
         </div>
       </div>
     </div>
   </section>
 
-  <footer><h3>FoldNest Furniture</h3><p>Smart Furniture For Smart Homes © 2026</p></footer>
+  <footer>
+    <h3>FoldNest Furniture</h3>
+    <p>Smart Furniture For Smart Homes &copy; 2026</p>
+  </footer>
 
   <script src="../js/config.js"></script>
   <script src="../js/main.js"></script>
   <script src="../js/checkout.js"></script>
 </body>
 </html>
-
